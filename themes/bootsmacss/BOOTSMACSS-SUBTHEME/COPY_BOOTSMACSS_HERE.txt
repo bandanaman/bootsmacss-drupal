@@ -1,0 +1,1 @@
+Check README.txt in WAAT base theme for tutorial.

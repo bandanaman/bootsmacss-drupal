@@ -1,0 +1,72 @@
+name = BootSMACSS base theme
+description = BootSMACSS base theme containing rewrites for BootSMACSS library
+core = 7.x
+base theme = bootstrap
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+
+regions[header] = 'Header'
+regions[navigation] = 'Navigation'
+regions[sidebar_first] = 'Body primary sidebar'
+regions[content_pre] = 'Body pre content'
+regions[content] = 'Body main content'
+regions[sidebar_second] = 'Body secondary sidebar'
+regions[footer] = 'Footer subscribe'
+regions[side_menu] = 'Collapsing sidebar menu'
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = css/style.css
+
+
+For information on choosing the desired method, please read the Drupal
+Bootstrap sub-theme "how-to" documentation:
+https://drupal.org/node/1978010
+
+;----------------------------------
+; METHOD 1: Bootstrap Source Files
+;----------------------------------
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+
+;scripts[] = 'bootstrap-sass/js/bootstrap/affix.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/alert.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/button.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/carousel.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/collapse.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/dropdown.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/modal.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/tooltip.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/popover.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/scrollspy.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/tab.js'
+;scripts[] = 'bootstrap-sass/js/bootstrap/transition.js'
+scripts[] = 'js/modernizr.js'
+
+; Disable BootstrapCDN if using Bootstrap source files in your sub-theme.
+settings[bootstrap_cdn] = ''
+
+
+; ;-------------------------
+; ; METHOD 2: Bootstrap CDN
+; ;-------------------------
+;
+; Method 2 uses BootstrapCDN, the only thing you might need to provide here
+; is overrides to Bootstrap theme settings. Copy them here from the base theme
+; to override.
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Breakpoints
+;;;;;;;;;;;;;;;;;;;;;
+breakpoints[desktop] = (min-width: 992px)
+breakpoints[tablet] = (min-width: 768px)
+breakpoints[phone] = (min-width: 0px)
