@@ -22,7 +22,7 @@ regions[side_menu] = 'Collapsing sidebar menu'
 ;; Stylesheets
 ;;;;;;;;;;;;;;;;;;;;;
 
-stylesheets[all][] = css/styles.css
+stylesheets[all][] = css/style.css
 
 
 For information on choosing the desired method, please read the Drupal

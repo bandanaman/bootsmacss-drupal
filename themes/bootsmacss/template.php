@@ -13,6 +13,18 @@ function bootsmacss_preprocess_page(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_node().
+ *
+ * Enable template suggestions for teasers ex. node--conent-type--teaser.tpl.php
+ */
+function bootsmacss_preprocess_node(&$vars) {
+  if($vars['view_mode'] == 'teaser') {
+    array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['node']->type . '__teaser');
+    array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['node']->nid . '__teaser');
+  }
+}
+
+/**
  * Implements hook_preprocess_block().
  */
 function bootsmacss_preprocess_block(&$variables) {
