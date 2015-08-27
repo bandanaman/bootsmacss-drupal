@@ -39,7 +39,7 @@
         </div>
       </div>
     <?php elseif ($title): ?>
-      <div class="listing__label"><?php print $title; ?></div>
+      <h2 class="listing__label"><?php print $title; ?></h2>
     <?php elseif ($more): ?>
       <div class="listing__label"><?php print $more; ?></div>
     <?php endif; ?>

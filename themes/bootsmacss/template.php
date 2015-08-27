@@ -138,7 +138,7 @@ function bootsmacss_preprocess_item_list(&$vars) {
               // Get prev page url and override the output:
               $link_path = _find_string_between($value['data'], 'href="', '"');
               if (isset($link_path) && $link_path != NULL && $link_path != '') {
-                $vars['items'][$key]['data'] = '<a href="' . $link_path . '"><span class="icon icon--arrow-prev"></span></a>';
+                $vars['items'][$key]['data'] = '<a href="' . $link_path . '"><span class="icon icon--arrow-left"></span></a>';
               }
             }
             if ($value['class'][0] == 'next') {
@@ -146,7 +146,7 @@ function bootsmacss_preprocess_item_list(&$vars) {
               // Get next page url and override the output:
               $link_path = _find_string_between($value['data'], 'href="', '"');
               if (isset($link_path) && $link_path != NULL && $link_path != '') {
-                $vars['items'][$key]['data'] = '<a href="' . $link_path . '"><span class="icon icon--arrow-next"></span></a>';
+                $vars['items'][$key]['data'] = '<a href="' . $link_path . '"><span class="icon icon--arrow-right"></span></a>';
               }
             }
             if ($value['class'][0] == 'active') {
