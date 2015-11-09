@@ -347,13 +347,13 @@ function bootsmacss_file_icon($variables) {
  * Returns the mime type in format that is a part of bootsmacss mime icon class.
  */
 function bootsmacss_icon_mime_class($filemime) {
-  if (strpos($filemime, 'doc') !== FALSE) {
+  if (strpos($filemime, 'msword') !== FALSE OR strpos($filemime, 'openxmlformats') !== FALSE) {
     return 'doc';
   }
   elseif (strpos($filemime, 'exe') !== FALSE) {
     return 'exe';
   }
-  elseif (strpos($filemime, 'jpg') !== 0 OR strpos($filemime, 'jpeg') !== FALSE) {
+  elseif (strpos($filemime, 'jpg') !== FALSE OR strpos($filemime, 'jpeg') !== FALSE) {
     return 'jpg';
   }
   elseif (strpos($filemime, 'pdf') !== FALSE) {
@@ -365,7 +365,7 @@ function bootsmacss_icon_mime_class($filemime) {
   elseif (strpos($filemime, 'rar') !== FALSE) {
     return 'rar';
   }
-  elseif (strpos($filemime, 'xls') !== FALSE) {
+  elseif (strpos($filemime, 'ms-excel') !== FALSE) {
     return 'xls';
   }
   elseif (strpos($filemime, 'zip') !== FALSE) {
