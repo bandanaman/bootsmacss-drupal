@@ -7,7 +7,18 @@
  * other files containing more complex functions.
  */
 
-/**
+ /**
+  * Implements hook_preprocess_page().
+  *
+  * @see page.tpl.php
+  */
+ function bootsmacss_subtheme_preprocess_page(&$variables) {
+  //  // Check whether given page is single page (entity page)
+  //  $menu_object = menu_get_object();
+  //  $variables['is_singlepage'] = (isset($menu_object->type)) ? TRUE : FALSE;
+ }
+
+ /**
  * Implements hook_preprocess_block().
  */
 function bootsmacss_subtheme_preprocess_block(&$variables) {
