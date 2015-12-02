@@ -56,7 +56,6 @@
  *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
- * - $page['highlighted']: Items for the highlighted content region.
  * - $page['content']: The main content of the current page.
  * - $page['sidebar_first']: Items for the first sidebar.
  * - $page['sidebar_second']: Items for the second sidebar.
@@ -77,265 +76,96 @@
  */
 ?>
 
-<div class="side-menu__wrap">
-  <!-- Component side-menu -->
-  <div class="side-menu">
-    <div class="side-menu__scrollbar-hider">
-      <h2 class="side-menu__title">
-        <span id="close-button" class="side-menu__close icon icon--close"></span>Navigation
-      </h2>
-      <?php if (!empty($page['side_menu'])): ?>
-        <?php print render($page['side_menu']); ?>
-      <?php endif; ?>
+<!-- Section Header -->
+<header class="section--header">
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-md-4">
+        <!-- Component logo -->
+        <a href="<?php print $front_page; ?>" class="media-text-row__media logo side-menu__button-spacer" title="<?php print t('Home'); ?>"></a>
+        <!-- /Component logo -->
+      </div>
+
+      <div class="col-md-6">
+        <?php if (!empty($page['user_nav'])): ?>
+          <?php print render($page['user_nav']); ?>
+        <?php endif; ?>
+      </div>
+
     </div>
+
   </div>
-  <!-- /Component side-menu -->
-  <div id="open-button" class="side-menu__button"><span class="icon icon--menu"></span></div>
-  <div class="side-menu__content-wrap">
-    <div class="side-menu__content">
+</header>
+<!-- /Section Header -->
 
-    <!-- Section Header -->
-    <header class="section-header">
-      <div class="container-fluid">
 
-        <div class="header bg bg--6">
-          <div class="row">
 
-            <div class="col-xs-6 col-sm-4">
+<!-- Section Content -->
+<div class="section--content">
+  <div class="container">
 
-              <!-- Component media-text-row -->
-              <div class="media-text-row">
-                <div class="media-text-row__row">
-                  <div class="media-text-row__media-col">
+    <?php print render($title_prefix); ?>
+    <h2><?php print $title; ?></h2>
+    <?php print render($title_suffix); ?>
 
-                    <!-- Component logo -->
-                    <a href="<?php print $front_page; ?>" class="media-text-row__media logo side-menu__button-spacer" title="<?php print t('Home'); ?>"></a>
-                    <!-- /Component logo -->
+    <div class="row">
 
-                  </div>
-                </div>
-              </div>
-              <!-- /Component media-text-row -->
-
-            </div>
-
-            <div class="col-xs-6 col-sm-8 col-lg-5">
-
-              <!-- Component media-text-row -->
-              <div class="media-text-row pull-right">
-                <div class="media-text-row__row">
-                  <div class="media-text-row__body hidden-xs">
-                    <?php if (!empty($page['site_descritpion'])): ?>
-
-                      <!-- Component description-cloud -->
-                      <div class="description-cloud description-cloud--corner-radius">
-                        <div class="description-cloud__polygon"></div>
-                        <div class="description-cloud__content">
-                          <?php print render($page['site_descritpion']); ?>
-                        </div>
-                      </div>
-                      <!-- /Component description-cloud -->
-
-                    <?php endif; ?>
-                  </div>
-                </div>
-              </div>
-              <!-- /Component media-text-row -->
-
-            </div>
-
-            <div class="col-xs-12 col-lg-3">
-              <?php if (!empty($page['user_nav'])): ?>
-                <?php print render($page['user_nav']); ?>
-              <?php endif; ?>
-            </div>
-
-          </div>
+      <!-- Section Sidebar first -->
+      <?php if (!empty($page['sidebar_first'])): ?>
+        <div class="section-sidebar section-sidebar-first col-sm-4">
+          <?php print render($page['sidebar_first']); ?>
         </div>
-
-        <?php if (!empty($page['engagement'])): ?>
-          <div class="engagement">
-            <?php print render($page['engagement']); ?>
-          </div>
-        <?php endif; ?>
-
-        <?php if (!empty($steps_nav)): ?>
-          <div class="navigation">
-            <?php print render($steps_nav); ?>
-          </div>
-        <?php endif; ?>
-
-      </div>
-    </header>
-    <!-- /Section Header -->
-
-    <!-- Section Main -->
-    <div class="section-main">
-      <?php if (!empty($page['help'])): ?>
-        <?php print render($page['help']); ?>
       <?php endif; ?>
-      <!-- Component bg -->
-      <?php if (!empty($page['highlighted_header']) || !empty($page['highlighted_right']) || !empty($page['highlighted_main'])): ?>
-      <div class="bg bg--5">
-        <div class="container-fluid bg bg--2">
-          <?php if (!empty($page['highlighted_header'])): ?>
+      <!-- /Section Sidebar first -->
 
-            <!-- Component highlight -->
-            <div class="highlight">
-              <?php print render($page['highlighted_header']); ?>
-            </div>
-            <!-- /Component highlight -->
-
-          <?php endif; ?>
-          <div class="row">
-            <div class="col-sm-4 col-sm-push-8">
-              <?php if (!empty($page['highlighted_right'])): ?>
-                <?php print render($page['highlighted_right']); ?>
-              <?php endif; ?>
-            </div>
-            <div class="col-sm-7 col-sm-pull-4">
-              <?php if (!empty($page['highlighted_main'])): ?>
-                <?php print render($page['highlighted_main']); ?>
-              <?php endif; ?>
-            </div>
-          </div>
-        </div>
-      </div>
+      <?php if (!empty($page['sidebar_first']) && !empty($page['sidebar_second'])): ?>
+        <div class="section-content col-sm-4">
+      <?php elseif (!empty($page['sidebar_first'])): ?>
+        <div class="section-content col-sm-7 col-sm-offset-1">
+      <?php elseif (!empty($page['sidebar_second'])): ?>
+        <div class="section-content col-sm-7">
+      <?php else: ?>
+        <div class="section-content col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
       <?php endif; ?>
-      <!-- /Component bg -->
-
-      <div class="container-fluid">
-
-        <?php print render($title_prefix); ?>
-        <?php if (!empty($page['content_header']) && !empty($title)): ?>
-          <!-- Component highlight -->
-          <div class="highlight visible-xs">
-            <h2 class="highlight__text bg bg--5"><strong><?php print $title; ?></strong></h2>
-          </div>
-          <!-- /Component highlight -->
-          <div class="hidden-xs">
-            <?php print render($page['content_header']); ?>
-          </div>
-        <?php elseif (!empty($title) && !$is_front): ?>
-          <!-- Component highlight -->
-          <div class="highlight">
-            <h2 class="highlight__text bg bg--5"><strong><?php print $title; ?></strong></h2>
-          </div>
-          <!-- /Component highlight -->
-        <?php elseif (!empty($page['content_header'])): ?>
-          <?php print render($page['content_header']); ?>
+        <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
+        <a id="main-content"></a>
+        <?php print $messages; ?>
+        <?php if (!empty($tabs)): ?>
+          <?php print render($tabs); ?>
         <?php endif; ?>
-
-        <?php print render($title_suffix); ?>
-
-        <div class="row">
-
-
-          <!-- Section Sidebar first -->
-          <?php if (!empty($page['sidebar_first'])): ?>
-            <div class="section-sidebar section-sidebar-first col-sm-4">
-              <?php print render($page['sidebar_first']); ?>
-            </div>
-          <?php endif; ?>
-          <!-- /Section Sidebar first -->
-
-
-          <?php if (!empty($page['sidebar_first']) && !empty($page['sidebar_second'])): ?>
-            <div class="section-content col-sm-4">
-          <?php elseif (!empty($page['sidebar_first'])): ?>
-            <div class="section-content col-sm-7 col-sm-offset-1">
-          <?php elseif (!empty($page['sidebar_second'])): ?>
-            <div class="section-content col-sm-7">
-          <?php else: ?>
-            <div class="section-content col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-          <?php endif; ?>
-            <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
-            <a id="main-content"></a>
-            <?php print $messages; ?>
-            <?php if (!empty($page['content_pre'])): ?>
-              <?php print render($page['content_pre']); ?>
-            <?php endif; ?>
-            <?php if (!empty($tabs)): ?>
-              <?php print render($tabs); ?>
-            <?php endif; ?>
-            <?php if (!empty($action_links)): ?>
-              <ul class="action-links"><?php print render($action_links); ?></ul>
-            <?php endif; ?>
-            <?php print render($page['content']); ?>
-          </div>
-
-          <!-- Section Sidebar second -->
-          <?php if (!empty($page['sidebar_second'])): ?>
-            <div class="section-sidebar section-sidebar-second col-sm-4 col-sm-offset-1<?php if ($is_front): ?> hidden-xs <?php endif; ?>">
-              <?php print render($page['sidebar_second']); ?>
-            </div>
-          <?php endif; ?>
-          <!-- /Section Sidebar second -->
-
-        </div>
-      </div>
-    </div>
-    <!-- /Section Main -->
-
-    <!-- Component bg -->
-    <div class="bg bg--3">
-      <div class="container-fluid">
-        <?php if (!empty($page['about'])): ?>
-
-          <!-- Component media-text-row -->
-          <div class="media-text-row media-text-row--paddings">
-            <div class="media-text-row__row">
-              <div class="media-text-row__media-col hidden-xs hidden-sm">
-                <!-- Component logo -->
-                <div class="media-text-row__media logo" style="width: 270px; height: 69px"></div>
-                <!-- /Component logo -->
-              </div>
-              <div class="media-text-row__body">
-                  <?php print render($page['about']); ?>
-              </div>
-            </div>
-          </div>
-          <!-- /Component media-text-row -->
-
+        <?php if (!empty($action_links)): ?>
+          <ul class="action-links"><?php print render($action_links); ?></ul>
         <?php endif; ?>
+        <?php if (!empty($page['help'])): ?>
+          <?php print render($page['help']); ?>
+        <?php endif; ?>
+        <?php print render($page['content']); ?>
       </div>
 
-      <!-- Component footer -->
-      <footer class="footer">
-        <div class="container-fluid">
-          <div class="row">
-            <?php if (!empty($page['footer_social'])): ?>
-              <?php if (!empty($page['footer_subscribe'])): ?>
-                <div class="col-xs-4 col-md-3 col-lg-2 col-lg-push-5">
-              <?php else: ?>
-                <div class="col-xs-12 col-md-3 col-md-push-9 col-lg-2 col-lg-push-10">
-              <?php endif; ?>
-                <?php print render($page['footer_social']); ?>
-              </div>
-            <?php endif; ?>
-            <?php if (!empty($page['footer_subscribe'])): ?>
-              <div class="col-xs-8 col-md-9 col-lg-5 col-lg-push-5">
-                <?php print render($page['footer_subscribe']); ?>
-              </div>
-            <?php endif; ?>
-            <?php if (!empty($page['footer_nav'])): ?>
-
-              <?php if (!empty($page['footer_subscribe'])): ?>
-                <div class="col-xs-12 col-lg-5 col-lg-pull-7">
-              <?php else: ?>
-
-                <nav class="col-xs-12 col-md-9 col-md-pull-3 col-lg-pull-2">
-              <?php endif; ?>
-                <?php print render($page['footer_nav']); ?>
-                </nav>
-
-            <?php endif; ?>
-          </div>
+      <!-- Section Sidebar second -->
+      <?php if (!empty($page['sidebar_second'])): ?>
+        <div class="section-sidebar section-sidebar-second col-sm-4 col-sm-offset-1<?php if ($is_front): ?> hidden-xs <?php endif; ?>">
+          <?php print render($page['sidebar_second']); ?>
         </div>
-      </footer>
-      <!-- /Component footer -->
+      <?php endif; ?>
+      <!-- /Section Sidebar second -->
 
     </div>
-    <!-- /Component bg -->
+
   </div>
 </div>
+<!-- /Section Content -->
+
+
+
+<!-- Component footer -->
+<footer class="section--footer">
+  <div class="container">
+    <?php if (!empty($page['footer'])): ?>
+      <?php if (!empty($page['footer_subscribe'])): ?>
+    <?php else: ?>
+  </div>
+</footer>
+<!-- /Component footer -->
