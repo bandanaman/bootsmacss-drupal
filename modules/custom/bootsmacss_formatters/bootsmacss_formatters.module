@@ -1,0 +1,639 @@
+<?php
+
+/**
+ * @file
+ * Defines custom BootSMACSS field formatters.
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function bootsmacss_formatters_field_formatter_info() {
+  return array(
+    'bootsmacss_counter' => array(
+      'label' => t('BootSMACSS Counter'),
+      'field types' => array('datestamp'),
+      'settings'  => array(
+        'track_width' => 1,
+        'track_color' => '#eee',
+        'bar_width' => 6,
+        'bar_color' => '#669900',
+        'bar_color_2weeks' => '#F7962F',
+        'bar_color_3days' => '#d80e26',
+        'force_big' => FALSE,
+      ),
+    ),
+    'bootsmacss_field_collection_accordion' => array(
+      'label' => t('BootSMACSS Field collection accordion'),
+      'description' => t('Renders each field collection item as collapsible accordion item'),
+      'field types' => array('field_collection'),
+      'settings'  => array(
+        'heading_field' => NULL,
+        'default_heading' => NULL,
+        'first_open' => FALSE,
+      ),
+    ),
+    'bootsmacss_label' => array(
+      'label' => t('BootSMACSS Bootstrap label'),
+      'description' => t('Labels separated with spaces. Good for displaying tags'),
+      'field types' => array('list_text', 'taxonomy_term_reference'),
+      'settings'  => array(
+        'variation' => 'default',
+      ),
+    ),
+    'bootsmacss_linking' => array(
+      'label' => t('BootSMACSS Linking to full content'),
+      'description' => t('Field wrappped into link to full content'),
+      'field types' => array('text'),
+      'settings'  => array(
+        'variation' => 'default',
+      ),
+    ),
+    'bootsmacss_listing' => array(
+      'label' => t('BootSMACSS Listing'),
+      'description' => t('Renders line items as listing component'),
+      'field types' => array('link_field'),
+      'settings'  => array(
+        'class' => '',
+      ),
+    ),
+    'bootsmacss_file' => array(
+      'label' => t('BootSMACSS Icon and text row'),
+      'field types' => array('file'),
+    ),
+    'bootsmacss_download_button' => array(
+      'label' => t('BootSMACSS Download button'),
+      'description' => t('Button to download file'),
+      'field types' => array('file'),
+      'settings'  => array(
+        'label' => 'Download file',
+      ),
+    ),
+    'bootsmacss_modal' => array(
+      'label' => t('BootSMACSS Modal window'),
+      'description' => t('Opens content of the field in modal window overlay'),
+      'field types' => array('text_long'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function bootsmacss_formatters_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $element = array();
+
+  // Switch for the different formatters.
+  switch ($display['type']) {
+    case 'bootsmacss_counter':
+      $element['track_width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Track width'),
+        '#default_value' => $settings['track_width'],
+        '#required' => TRUE,
+        '#element_validate' => array('element_validate_number'),
+        '#description' => t('Value in pixels'),
+      );
+      $element['track_color'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Track color'),
+        '#default_value' => $settings['track_color'],
+        '#required' => TRUE,
+      );
+      $element['bar_width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Bar width'),
+        '#default_value' => $settings['bar_width'],
+        '#required' => TRUE,
+        '#element_validate' => array('element_validate_number'),
+        '#description' => t('Value in pixels'),
+      );
+      $element['bar_color'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Default bar color'),
+        '#default_value' => $settings['bar_color'],
+        '#required' => TRUE,
+      );
+      $element['bar_color_2weeks'] = array(
+        '#type' => 'textfield',
+        '#title' => t('2 weeks remaining bar color'),
+        '#default_value' => $settings['bar_color_2weeks'],
+        '#required' => FALSE,
+        '#description' => t('Leave empty to use default value'),
+      );
+      $element['bar_color_3days'] = array(
+        '#type' => 'textfield',
+        '#title' => t('3 days remaining bar color'),
+        '#default_value' => $settings['bar_color_3days'],
+        '#required' => FALSE,
+        '#description' => t('Leave empty to use default value'),
+      );
+      $element['force_big'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Force counter always to be displayed in big version'),
+        '#default_value' => $settings['force_big'],
+        '#return_value' => TRUE,
+        '#required' => FALSE,
+        '#description' => t('Displays counter in big version even if parent div is wider then default counter width. Read styleguide for more info.'),
+      );
+      break;
+
+    case 'bootsmacss_field_collection_accordion':
+      $info = entity_get_property_info('field_collection_item');
+      $options = array(
+        '' => t('- No heading field -'),
+      );
+      foreach ($info['bundles'][$instance['field_name']]['properties'] as $mode => $values) {
+        $options[$mode] = $values['label'];
+      }
+      $element['heading_field'] = array(
+        '#type' => 'select',
+        '#title' => t('Heading field'),
+        '#options' => $options,
+        '#default_value' => $settings['heading_field'],
+        '#description' => t('Select the field to be displayed as accordion heading. If the heading is not set, auto increment number will be displayed'),
+      );
+      $element['default_heading'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Default heading'),
+        '#default_value' => $settings['default_heading'],
+        '#description' => t('Defauld heading label to be displayed if heading field is not set or empty. It will be rendered with item number. Ex. <em>Label #1, Label #2, Label #3</em> etc.'),
+      );
+      $element['first_open'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('First item open'),
+        '#default_value' => $settings['first_open'],
+        '#description' => t('Select it to open first accordion item automatically on page load.'),
+      );
+      break;
+
+    case 'bootsmacss_label':
+      $element['variation'] = array(
+        '#type' => 'select',
+        '#title' => t('Variation'),
+        '#options' => array(
+          'default' => 'Default',
+          'primary' => 'Primary',
+          'success' => 'Success',
+          'info' => 'Info',
+          'warning' => 'Warning',
+          'danger' => 'Danger',
+        ),
+        '#default_value' => $settings['variation'],
+        '#description' => t(''),
+      );
+      break;
+
+    case 'bootsmacss_listing':
+      $element['class'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Classes'),
+        '#default_value' => $settings['class'],
+        '#description' => t('You can add additional listing modifiers here.'),
+      );
+      break;
+
+    case 'bootsmacss_download_button':
+      $element['label'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Button label'),
+        '#default_value' => $settings['label'],
+        '#description' => t('Text to be displayed inside the button.'),
+      );
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function bootsmacss_formatters_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $summary = '';
+
+  // Switch for the different formatters.
+  switch ($display['type']) {
+    case 'bootsmacss_counter':
+      if (isset($settings['track_width'])) {
+        $summary[] = t('Track width: @width px', array('@width' => $settings['track_width']));
+      }
+      if (isset($settings['track_color'])) {
+        $summary[] = t('Track color: @color', array('@color' => $settings['track_color']));
+      }
+      if (isset($settings['bar_width'])) {
+        $summary[] = t('Bar width: @width px', array('@width' => $settings['bar_width']));
+      }
+      if (isset($settings['bar_color'])) {
+        $summary[] = t('Default bar color: @color', array('@color' => $settings['bar_color']));
+      }
+      if (isset($settings['bar_color_2weeks'])) {
+        $summary[] = t('2 weeks remaining bar color: @color', array('@color' => $settings['bar_color_2weeks']));
+      }
+      if (isset($settings['bar_color_3days'])) {
+        $summary[] = t('3 days remaining bar color: @color', array('@color' => $settings['bar_color_3days']));
+      }
+      if (isset($settings['force_big']) && $settings['force_big'] == TRUE) {
+        $summary[] = t('Force big version');
+      }
+      break;
+
+    case 'bootsmacss_field_collection_accordion':
+      $info = entity_get_property_info('field_collection_item');
+      if (!empty($settings['heading_field'])) {
+        $summary[] = t('Heading field: @field', array('@field' => $info['bundles'][$instance['field_name']]['properties'][$settings['heading_field']]['label']));
+      }
+      else {
+        $summary[] = t('Heading field not set');
+      }
+      if (isset($settings['default_heading'])) {
+        $summary[] = t('Default heading: @heading', array('@heading' => $settings['default_heading']));
+      }
+      if (isset($settings['first_open'])) {
+        $summary[] = t('First accordion item open');
+      }
+      break;
+
+    case 'bootsmacss_download_button':
+      if (isset($settings['label'])) {
+        $summary[] = t('Button label: @label', array('@label' => $settings['label']));
+      }
+      break;
+
+    case 'bootsmacss_label':
+      if (isset($settings['variation'])) {
+        $summary[] = t('Variation: @variation', array('@variation' => $settings['variation']));
+      }
+      break;
+
+    case 'bootsmacss_listing':
+      if (isset($settings['class'])) {
+        $summary[] = t('Class: @class', array('@class' => $settings['class']));
+      }
+      break;
+  }
+
+  $summary = implode('<br />', $summary);
+  return $summary;
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $elements = array();
+  $settings = $display['settings'];
+  $path = drupal_get_path('module', 'bootsmacss_formatters');
+
+  // Switch for the different formatters.
+  switch ($display['type']) {
+    case 'bootsmacss_counter':
+      foreach ($items as $delta => $item) {
+
+        // Create unique id for each element on page.
+        $item['id'] = $_SESSION['counter_id'];
+        $_SESSION['counter_id']++;
+
+        // Empty value logic. See bootsmacss_formatters_field_formatter_prepare_view().
+        if (isset($item['empty'])) {
+          $js_settings['counterBarColor'][] = $settings['bar_color'];
+        }
+        else {
+          // Prepare end date in correct format.
+          $item['caption'] = format_date($item['value2'], 'custom', 'j-M-Y');
+          $item['label'] = t('days left');
+          // $item['day'] = format_date($item['value2'], 'custom', 'j');
+
+          $today = time();
+          $seconds_in_day = 60*60*24;
+
+          // Prepare days left from today to end date.
+          $timeleft = $item['value2'] - $today;
+          if ($timeleft <= $seconds_in_day && $timeleft > 0) {
+            $item['left'] = 1;
+          }
+          else {
+            $item['left'] = floor($timeleft / $seconds_in_day);
+          }
+
+          // Prepare percentage how much time has passed from start to end date.
+          // Do the math = (today - start) / (end - start) * 100
+          $current_value = $today - $item['value'];
+          $end_value = $item['value2'] - $item['value'];
+          $item['percentage'] = $current_value / $end_value * 100;
+
+          // If there is less than 7 days left, change color of the bar.
+          if ($item['left'] > 14) {
+            $js_settings['counterBarColor'][] = $settings['bar_color'];
+          }
+          elseif ($item['left'] > 3) {
+            $js_settings['counterBarColor'][] = $settings['bar_color_2weeks'];
+          }
+          else {
+            $js_settings['counterBarColor'][] = $settings['bar_color_3days'];
+          }
+
+          // Prevent from display negative value.
+          if ($item['left'] < 0) {
+            $item['left'] = 0;
+          }
+        }
+
+        // Force big option handling.
+        $item['force_big'] = ($settings['force_big']) ? TRUE : FALSE;
+
+        // Script settings for empty and non empty values.
+        $js_settings['counterTrackWidth'][] = $settings['track_width'];
+        $js_settings['counterTrackColor'][] = $settings['track_color'];
+        $js_settings['counterLineWidth'][] = $settings['bar_width'];
+        $js_settings['counterId'][] = $item['id'];
+
+        $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+        $elements[$delta] = array(
+          '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
+        );
+
+      }
+      // Global scripts loaded for all delta items.
+      drupal_add_js(array('bootsmacss_formatters' => $js_settings), 'setting');
+      $elements['#attached'] = array(
+        'js' => array(
+          $path . '/js/counter/easy-pie-chart.js',
+          $path . '/js/counter/counter-init.js',
+        ),
+      );
+      break;
+
+    case 'bootsmacss_field_collection_accordion':
+      $view_mode = !empty($settings['view_mode']) ? $settings['view_mode'] : 'full';
+      $default_heading = !empty($settings['default_heading']) ? $settings['default_heading'] : '';
+      // Apply accordion styling only if there is more than one item.
+      if (count($items) > 1) {
+        foreach ($items as $delta => $item) {
+          if ($field_collection = field_collection_field_get_entity($item)) {
+            // Field collection entity to be rendered as accordion panel content.
+            $field_collection_item = entity_load('field_collection_item', array($item['value']));
+            $item['entity'] = entity_view('field_collection_item', $field_collection_item, $view_mode);
+
+            // Delta + 1 to look fine as accordion item numering.
+            $item['numering'] = $delta + 1;
+
+            // Accordion panel heading.
+            if (isset($settings['heading_field']) && $settings['heading_field'] != NULL) {
+              $field_collection_item = array_shift($field_collection_item);
+              $heading_field = field_view_field('field_collection_item', $field_collection_item, $settings['heading_field']);
+              if (!empty($heading_field)) {
+                $item['heading'] = $heading_field['#items'][0]['value'];
+              }
+              else {
+                $item['empty_heading'] = $default_heading . ' #' . $item['numering'];
+              }
+            }
+            else {
+              $item['empty_heading'] = $default_heading . ' #' . $item['numering'];
+            }
+
+            // First item open.
+            if (isset($settings['first_open']) && $delta == 0) {
+              $item['open'] = TRUE;
+            }
+
+            $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+            $elements[$delta] = array(
+              '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
+              '#attached' => array(
+                'js' => array(
+                  $path . '/js/counter/easy-pie-chart.js',
+                  $path . '/js/counter/counter-init.js',
+                ),
+              ),
+            );
+          }
+        }
+        $elements['#prefix'] = '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">';
+        $elements['#suffix'] = '</div>';
+      }
+      // If there is only one item, display it normal way.
+      else {
+        foreach ($items as $delta => $item) {
+          if ($field_collection = field_collection_field_get_entity($item)) {
+            $field_collection_item = entity_load('field_collection_item', array($item['value']));
+            $elements[$delta]['entity'] = $field_collection->view($view_mode);
+            $elements[$delta]['#theme_wrappers'] = array('field_collection_view');
+            $elements[$delta]['#attributes']['class'][] = 'field-collection-view';
+            $elements[$delta]['#attributes']['class'][] = 'clearfix';
+            $elements[$delta]['#attributes']['class'][] = drupal_clean_css_identifier('view-mode-' . $view_mode);
+          }
+        }
+      }
+      break;
+
+    case 'bootsmacss_label':
+      foreach ($items as $delta => $item) {
+        switch ($field['type']) {
+          case 'taxonomy_term_reference':
+            $term = taxonomy_term_load($item['tid']);
+            $uri = taxonomy_term_uri($term);
+            $label = '<span class="label label-' . $settings['variation'] . '">' . $term->name . '</span>';
+            $link = l($label, $uri['path'], array('html' => TRUE,));
+            $markup = $link . ' ';
+            break;
+
+          default:
+            $markup = '<span class="label label-' . $settings['variation'] . '">' . $item['value'] . '</span>';
+            break;
+        }
+
+        $elements[$delta] = array(
+          '#markup' =>   $markup,
+        );
+      }
+      break;
+
+    case 'bootsmacss_listing':
+      $markup = '<div class="listing ' . $settings['class'] . '">';
+      foreach ($items as $delta => $item) {
+        switch ($field['type']) {
+          case 'link_field':
+            $link = l($item['title'], $item['url'], array('attributes' => $item['attributes']));
+            $markup .= '
+              <div class="listing__item">
+                <h3 class="listing__item-title">
+                  <span class="icon icon--link"></span>' . $link . '
+                </h3>
+              </div>';
+            break;
+        }
+        $markup .= '</div>';
+
+        $elements[$delta] = array(
+          '#markup' =>   $markup,
+        );
+      }
+      break;
+
+    case 'bootsmacss_linking':
+      foreach ($items as $delta => $item) {
+        $uri = entity_uri($entity_type, $entity);
+        $elements[$delta] = array(
+          '#markup' => l($item['value'], $uri['path'], array('html' => TRUE,)),
+        );
+      }
+      break;
+
+    case 'bootsmacss_file':
+      foreach ($items as $delta => $item) {
+        // Convert item to object.
+        $file = new stdClass();
+        foreach ($item as $key => $value) {
+          $file->$key = $value;
+        }
+        $icon_directory = $variables['icon_directory'];
+
+        $url = file_create_url($file->uri);
+        $item['icon'] = theme('bootsmacss_formatters_file_icon', array('file' => $file, 'icon_directory' => $icon_directory));
+
+        // Set options as per anchor format described at
+        // http://microformats.org/wiki/file-format-examples
+        $options = array(
+          'attributes' => array(
+            'type' => $file->filemime . '; length=' . $file->filesize,
+          ),
+        );
+
+        // Use the description as the link text if available.
+        if (empty($file->description)) {
+          $link_text = $file->filename;
+        }
+        else {
+          $link_text = $file->description;
+          $options['attributes']['title'] = check_plain($file->filename);
+        }
+        $item['link'] = l($link_text, $url, $options);
+        $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+
+        $elements[$delta] = array(
+          '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
+        );
+      }
+      break;
+
+    case 'bootsmacss_download_button':
+      foreach ($items as $delta => $item) {
+        $url = file_create_url($item['uri']);
+        $icon = ' <span class="icon icon--download"></span>';
+        $link = l($settings['label'] . $icon, $url, array(
+          'attributes' => array(
+            'class' => array('btn', 'btn-primary', 'btn-lg'),
+            'target' => '_blank'),
+          'html' => TRUE,
+        ));
+        $elements[$delta] = array(
+          '#markup' => $link . '<br />',
+        );
+      }
+      break;
+
+    case 'bootsmacss_modal':
+      foreach ($items as $delta => $item) {
+        $item['label'] = $instance['label'];
+        $item['id'] = $delta;
+        $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+        $elements[$delta] = array(
+          '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
+        );
+      }
+      break;
+  }
+
+  return $elements;
+}
+
+/**
+ * Implements hook_field_formatter_prepare_view().
+ */
+function bootsmacss_formatters_field_formatter_prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $displays) {
+  // Counter empty date logic.
+  if (isset($field['type']) && $field['type'] == 'datestamp') {
+    foreach ($items as $key => $item) {
+      // If date is not set, display "Open all year" state.
+      if (empty($item)) {
+        $items[$key][] = array(
+          'empty' => TRUE,
+          'label' => t('open'),
+          'left' => 0,
+          'caption' => t('all year'),
+          'percentage' => 100,
+        );
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bootsmacss_formatters_theme($existing, $type, $theme, $path) {
+  return array(
+    'bootsmacss_formatters_formatter_bootsmacss_counter' => array(
+      'template' => 'bootsmacss-counter',
+      'path' => $path . '/templates/field',
+      'variables' => array('element' => NULL),
+    ),
+    'bootsmacss_formatters_formatter_bootsmacss_field_collection_accordion' => array(
+      'template' => 'bootsmacss-accordion',
+      'path'=> $path . '/templates/field',
+      'render element' => 'elements',
+    ),
+    'bootsmacss_formatters_formatter_bootsmacss_file' => array(
+      'template' => 'bootsmacss-file-link',
+      'path'=> $path . '/templates/field',
+      'render element' => 'elements',
+    ),
+    'bootsmacss_formatters_file_icon' => array(
+      'variables' => array('file' => NULL, 'icon_directory' => NULL),
+    ),
+    'bootsmacss_formatters_formatter_bootsmacss_modal' => array(
+      'template' => 'bootsmacss-modal',
+      'path'=> $path . '/templates/field',
+      'render element' => 'elements',
+    ),
+  );
+}
+
+/**
+ * Implements hook_init().
+ */
+function bootsmacss_formatters_init() {
+  // Reset unique counter id in every page load.
+  // See bootsmacss_formatters_field_formatter_view().
+  // $_SESSION['counter_id'] = 0;
+}
+
+/**
+ * Implements hook_ds_fields_info().
+ */
+function bootsmacss_formatters_ds_fields_info($entity_type) {
+  $fields = array();
+  $fields['more_button'] = array(
+    'title' => t('Bootstrap more button'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'function' => '_bootsmacss_formatters_ds_field_more_button',
+  );
+  return array('node' => $fields);
+}
+
+/*
+ * Show only likes from my friends.
+ */
+function _bootsmacss_formatters_ds_field_more_button($field) {
+  $path = drupal_get_path_alias('node/' . $field['entity']->nid);
+  $output = l(t('Read more'), $path, array(
+    'attributes' => array('class' => array('btn', 'btn-primary', 'btn-sm'))
+  ));
+  return $output;
+}

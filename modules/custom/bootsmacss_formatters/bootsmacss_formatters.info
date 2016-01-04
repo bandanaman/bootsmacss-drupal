@@ -1,0 +1,4 @@
+name = BootSMACSS Formatters
+description  = "Field formatters for various BootSMACSS components"
+package = "WAAT"
+core = 7.x
