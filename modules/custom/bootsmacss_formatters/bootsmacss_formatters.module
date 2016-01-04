@@ -182,7 +182,7 @@ function bootsmacss_formatters_field_formatter_settings_form($field, $instance, 
           'danger' => 'Danger',
         ),
         '#default_value' => $settings['variation'],
-        '#description' => t(''),
+        '#description' => '',
       );
       break;
 
@@ -298,7 +298,8 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
         $item['id'] = $_SESSION['counter_id'];
         $_SESSION['counter_id']++;
 
-        // Empty value logic. See bootsmacss_formatters_field_formatter_prepare_view().
+        // Empty value logic.
+        // See bootsmacss_formatters_field_formatter_prepare_view().
         if (isset($item['empty'])) {
           $js_settings['counterBarColor'][] = $settings['bar_color'];
         }
@@ -306,10 +307,9 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
           // Prepare end date in correct format.
           $item['caption'] = format_date($item['value2'], 'custom', 'j-M-Y');
           $item['label'] = t('days left');
-          // $item['day'] = format_date($item['value2'], 'custom', 'j');
 
           $today = time();
-          $seconds_in_day = 60*60*24;
+          $seconds_in_day = 60 * 60 * 24;
 
           // Prepare days left from today to end date.
           $timeleft = $item['value2'] - $today;
@@ -321,7 +321,7 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
           }
 
           // Prepare percentage how much time has passed from start to end date.
-          // Do the math = (today - start) / (end - start) * 100
+          // Do the math = (today - start) / (end - start) * 100.
           $current_value = $today - $item['value'];
           $end_value = $item['value2'] - $item['value'];
           $item['percentage'] = $current_value / $end_value * 100;
@@ -352,7 +352,11 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
         $js_settings['counterLineWidth'][] = $settings['bar_width'];
         $js_settings['counterId'][] = $item['id'];
 
-        $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+        $element = array(
+          'element' => $item,
+          'field' => $instance,
+          'display' => $display,
+        );
         $elements[$delta] = array(
           '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
         );
@@ -375,7 +379,7 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
       if (count($items) > 1) {
         foreach ($items as $delta => $item) {
           if ($field_collection = field_collection_field_get_entity($item)) {
-            // Field collection entity to be rendered as accordion panel content.
+            // Field collection entity to be rendered as panel content.
             $field_collection_item = entity_load('field_collection_item', array($item['value']));
             $item['entity'] = entity_view('field_collection_item', $field_collection_item, $view_mode);
 
@@ -402,7 +406,11 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
               $item['open'] = TRUE;
             }
 
-            $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+            $element = array(
+              'element' => $item,
+              'field' => $instance,
+              'display' => $display,
+            );
             $elements[$delta] = array(
               '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
               '#attached' => array(
@@ -439,7 +447,7 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
             $term = taxonomy_term_load($item['tid']);
             $uri = taxonomy_term_uri($term);
             $label = '<span class="label label-' . $settings['variation'] . '">' . $term->name . '</span>';
-            $link = l($label, $uri['path'], array('html' => TRUE,));
+            $link = l($label, $uri['path'], array('html' => TRUE));
             $markup = $link . ' ';
             break;
 
@@ -449,7 +457,7 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
         }
 
         $elements[$delta] = array(
-          '#markup' =>   $markup,
+          '#markup' => $markup,
         );
       }
       break;
@@ -471,7 +479,7 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
         $markup .= '</div>';
 
         $elements[$delta] = array(
-          '#markup' =>   $markup,
+          '#markup' => $markup,
         );
       }
       break;
@@ -480,7 +488,7 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
       foreach ($items as $delta => $item) {
         $uri = entity_uri($entity_type, $entity);
         $elements[$delta] = array(
-          '#markup' => l($item['value'], $uri['path'], array('html' => TRUE,)),
+          '#markup' => l($item['value'], $uri['path'], array('html' => TRUE)),
         );
       }
       break;
@@ -514,7 +522,11 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
           $options['attributes']['title'] = check_plain($file->filename);
         }
         $item['link'] = l($link_text, $url, $options);
-        $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+        $element = array(
+          'element' => $item,
+          'field' => $instance,
+          'display' => $display,
+        );
 
         $elements[$delta] = array(
           '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
@@ -529,7 +541,8 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
         $link = l($settings['label'] . $icon, $url, array(
           'attributes' => array(
             'class' => array('btn', 'btn-primary', 'btn-lg'),
-            'target' => '_blank'),
+            'target' => '_blank',
+          ),
           'html' => TRUE,
         ));
         $elements[$delta] = array(
@@ -542,7 +555,11 @@ function bootsmacss_formatters_field_formatter_view($entity_type, $entity, $fiel
       foreach ($items as $delta => $item) {
         $item['label'] = $instance['label'];
         $item['id'] = $delta;
-        $element = array('element' => $item, 'field' => $instance, 'display' => $display);
+        $element = array(
+          'element' => $item,
+          'field' => $instance,
+          'display' => $display,
+        );
         $elements[$delta] = array(
           '#markup' => theme('bootsmacss_formatters_formatter_' . $display['type'], $element),
         );
@@ -586,12 +603,12 @@ function bootsmacss_formatters_theme($existing, $type, $theme, $path) {
     ),
     'bootsmacss_formatters_formatter_bootsmacss_field_collection_accordion' => array(
       'template' => 'bootsmacss-accordion',
-      'path'=> $path . '/templates/field',
+      'path' => $path . '/templates/field',
       'render element' => 'elements',
     ),
     'bootsmacss_formatters_formatter_bootsmacss_file' => array(
       'template' => 'bootsmacss-file-link',
-      'path'=> $path . '/templates/field',
+      'path' => $path . '/templates/field',
       'render element' => 'elements',
     ),
     'bootsmacss_formatters_file_icon' => array(
@@ -599,7 +616,7 @@ function bootsmacss_formatters_theme($existing, $type, $theme, $path) {
     ),
     'bootsmacss_formatters_formatter_bootsmacss_modal' => array(
       'template' => 'bootsmacss-modal',
-      'path'=> $path . '/templates/field',
+      'path' => $path . '/templates/field',
       'render element' => 'elements',
     ),
   );
@@ -611,7 +628,7 @@ function bootsmacss_formatters_theme($existing, $type, $theme, $path) {
 function bootsmacss_formatters_init() {
   // Reset unique counter id in every page load.
   // See bootsmacss_formatters_field_formatter_view().
-  // $_SESSION['counter_id'] = 0;
+  // $_SESSION['counter_id'] = 0;.
 }
 
 /**
@@ -627,13 +644,13 @@ function bootsmacss_formatters_ds_fields_info($entity_type) {
   return array('node' => $fields);
 }
 
-/*
+/**
  * Show only likes from my friends.
  */
 function _bootsmacss_formatters_ds_field_more_button($field) {
   $path = drupal_get_path_alias('node/' . $field['entity']->nid);
   $output = l(t('Read more'), $path, array(
-    'attributes' => array('class' => array('btn', 'btn-primary', 'btn-sm'))
+    'attributes' => array('class' => array('btn', 'btn-primary', 'btn-sm')),
   ));
   return $output;
 }
