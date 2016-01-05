@@ -54,7 +54,7 @@
 
   <?php /* View elements before Listing */ ?>
   <?php if ($exposed): ?>
-    <div class="view-filters">
+    <div class="listing__filters">
         <?php print $exposed; ?>
     </div>
   <?php endif; ?>
@@ -85,7 +85,7 @@
     </div>
   <?php endif; ?>
   <?php if ($footer): ?>
-    <div class="view-footer">
+    <div class="listing__footer">
         <?php print $footer; ?>
     </div>
   <?php endif; ?>
