@@ -48,22 +48,9 @@
 <section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
   <?php if (isset($title) && $title): ?>
-    <?php if (isset($more)): ?>
-      <<?php print $title_tag; ?><?php print $title_attributes; ?>>
-        <div class="title-more__row">
-          <div class="title-more__col">
-              <?php print $title; ?>
-          </div>
-          <div class="title-more__col">
-            <?php print $more ?>
-          </div>
-        </div>
-      </<?php print $title_tag; ?>>
-    <?php else: ?>
-    <<?php print $title_tag; ?><?php print $title_attributes; ?>>
-      <?php print $title; ?>
-    </<?php print $title_tag; ?>>
-    <?php endif; ?>
+    <h2 class="block__title">
+      <span><?php print $title; ?></span>
+    </h2>
   <?php endif;?>
   <?php print render($title_suffix); ?>
 
