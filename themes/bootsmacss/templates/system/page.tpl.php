@@ -100,8 +100,6 @@
 </header>
 <!-- /Section Header -->
 
-
-
 <!-- Section Content -->
 <div class="section--content">
   <div class="container">
@@ -157,8 +155,6 @@
   </div>
 </div>
 <!-- /Section Content -->
-
-
 
 <!-- Component footer -->
 <footer class="section--footer">
