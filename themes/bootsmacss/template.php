@@ -47,12 +47,6 @@ function bootsmacss_preprocess_block(&$variables) {
     $variables['title_tag'] = 'h3';
   }
 
-  // Hide block titles on specific regions.
-  // $regions_without_titles = array('highlight_primary', 'highlight_sidebar');
-  // if (in_array($variables['block']->region, $regions_without_titles)) {
-  //   $variables['block']->subject = NULL;
-  // }
-
   // Hide titles on all Quicktabs blocks and blocks in navigation regions.
   $regions_without_titles = array('navigation', 'top_nav');
   if (in_array($variables['block']->region, $regions_without_titles) || $variables['block']->module == 'quicktabs') {
@@ -96,14 +90,14 @@ function bootsmacss_preprocess_views_view(&$variables) {
       $more_links_title = $view->display_handler->options['use_more_text'];
     }
     else {
-      $more_links_title = "See all";
+      $more_links_title = t('See all');
     }
 
     $more_link_display_id = $view->display_handler->options['link_display'];
     if ($more_link_display_id != 'custom_url') {
       if (isset($view->display[$more_link_display_id]->handler->options['path'])) {
         $more_link_path = $view->display[$more_link_display_id]->handler->options['path'];
-        $more = l(t($more_links_title), $more_link_path, array(
+        $more = l($more_links_title, $more_link_path, array(
           'html' => TRUE,
           'attributes' => array(
             'class' => array('btn', 'btn-default', 'pull-right'),
@@ -114,7 +108,7 @@ function bootsmacss_preprocess_views_view(&$variables) {
       else {
         // If path was not specified in block but "user more link" was selected
         // create anchor-only link (#):
-        $more = l(t($more_links_title), NULL, array(
+        $more = l($more_links_title, NULL, array(
           'external' => TRUE,
           'fragment' => FALSE,
           'attributes' => array(
@@ -126,7 +120,7 @@ function bootsmacss_preprocess_views_view(&$variables) {
     }
     else {
       $more_link_path = $view->display_handler->options['link_url'];
-      $more = l(t($more_links_title), $more_link_path, array(
+      $more = l($more_links_title, $more_link_path, array(
         'html' => TRUE,
         'attributes' => array(
           'class' => array('btn', 'btn-default', 'pull-right'),
