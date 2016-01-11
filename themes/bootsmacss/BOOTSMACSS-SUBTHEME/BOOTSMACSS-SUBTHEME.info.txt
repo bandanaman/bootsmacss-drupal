@@ -11,11 +11,9 @@ base theme = bootsmacss
 regions[header] = 'Header'
 regions[navigation] = 'Navigation'
 regions[sidebar_first] = 'Body primary sidebar'
-regions[content_pre] = 'Body pre content'
 regions[content] = 'Body main content'
 regions[sidebar_second] = 'Body secondary sidebar'
-regions[footer] = 'Footer subscribe'
-regions[side_menu] = 'Collapsing sidebar menu'
+regions[footer] = 'Footer'
 
 
 ;;;;;;;;;;;;;;;;;;;;;

@@ -101,53 +101,8 @@
 <!-- /Navbar -->
 
 <!-- Content layout -->
-<div class="layout layout--4">
-
-  <div class="layout__header-wrapper">
-    <div class="container">
-      <?php print render($title_prefix); ?>
-      <h2><?php print $title; ?></h2>
-      <?php print render($title_suffix); ?>
-      <?php if (!empty($page['header'])): ?>
-          <?php print render($page['header']); ?>
-      <?php endif; ?>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row row-equal-md">
-      <div class="layout__content-wrapper <?php print $content_wrapper_classes; ?>">
-        <div class="layout__content">
-          <a id="main-content"></a>
-          <?php if (!empty($tabs)): ?>
-            <?php print render($tabs); ?>
-          <?php endif; ?>
-          <?php if (!empty($action_links)): ?>
-            <ul class="action-links"><?php print render($action_links); ?></ul>
-          <?php endif; ?>
-          <?php if (!empty($page['help'])): ?>
-            <?php print render($page['help']); ?>
-          <?php endif; ?>
-          <?php print render($page['content']); ?>
-        </div>
-      </div>
-
-      <!-- Layout Sidebar right -->
-      <?php if (!empty($page['sidebar_second'])): ?>
-        <div class="col-sm-4">
-          <div class="layout__sidebar-right">
-            <?php print render($page['sidebar_second']); ?>
-          </div>
-        </div>
-      <?php endif; ?>
-      <!-- /Layout Sidebar right -->
-
-    </div>
-  </div>
-
-</div>
+<?php print render($page['content']); ?>
 <!-- /Content layout -->
-
 
 <!-- Section Footer -->
 <?php if (!empty($page['page_footer'])): ?>

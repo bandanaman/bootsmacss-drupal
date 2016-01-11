@@ -17,6 +17,26 @@ include_once 'bootsmacss.api.php';
 function bootsmacss_preprocess_page(&$variables) {
   // Extending Drupal.settings with pathToTheme object.
   drupal_add_js('jQuery.extend(Drupal.settings, { "pathToTheme": "' . path_to_theme() . '" });', 'inline');
+
+  // Check whether given page is configured on Display Suite layout.
+  $menu_object = menu_get_object();
+  if (module_exists('ds') && !empty($menu_object->type)) {
+    $layout = ds_get_layout('node', $menu_object->type, 'full');
+  }
+  $variables['is_ds_node'] = (!empty($layout)) ? TRUE : FALSE;
+
+  // Layout grid logic.
+  if (!$variables['is_ds_node']) {
+    if (empty($variables['page']['sidebar_second'])) {
+      $variables['content_wrapper_classes'] = 'col-sm-8 col-sm-offset-2';
+    }
+    else {
+      $variables['content_wrapper_classes'] = 'col-sm-8';
+    }
+  }
+  else {
+    $variables['theme_hook_suggestions'][] = 'page__ds_node';
+  }
 }
 
 /**
