@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * Code for the Bootsmacss core feature.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bootsmacss_core_menu() {
+  // Empty frontpage placeholder.
+  $items['homepage'] = array(
+    'title' => '',
+    'description' => 'Home page',
+    'page callback' => 'bootsmacss_core_frontpage',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Front page template callback.
+ */
+function bootsmacss_core_frontpage() {
+  return '';
+}

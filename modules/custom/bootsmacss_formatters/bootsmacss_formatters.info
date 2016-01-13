@@ -1,4 +1,4 @@
-name = BootSMACSS Formatters
+name = Bootsmacss Formatters
 description  = "Field formatters for various BootSMACSS components"
-package = "WAAT"
+package = bootsmacss
 core = 7.x

@@ -1,0 +1,7 @@
+name = Bootsmacss views
+description  = Views style plugins created for bootsmacss BEM components
+package = bootsmacss
+core = 7.x
+files[] = views_plugin_style_bootsmacss_listing.inc
+
+dependencies[] = views
