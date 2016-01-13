@@ -35,9 +35,12 @@ class views_plugin_style_bootsmacss_listing extends views_plugin_style {
         'no_separators' => t('No Separators'),
         'separators_dashed ' => t('Separators Dashed'),
         'column_second_above' => t('Column Second Above'),
+        'numbered' => t('Numbered'),
+        'middlealign' => t('Middle Align'),
         'row_two' => t('Row with two items'),
         'row_three' => t('Row with three items'),
       ),
+      '#multiple' => TRUE,
       '#default_value' => $this->options['listing_modifier'],
     );
 

@@ -28,9 +28,10 @@ function template_preprocess_views_view_bootsmacss_listing(&$variables) {
 
   $variables['listing_modifier'] = '';
   if (!empty($style_plugin_options['listing_modifier']) && $style_plugin_options['listing_modifier'] != 'default') {
-    $listing_modifier = $style_plugin_options['listing_modifier'];
-    $variables['listing_modifier'] = 'listing--' . str_replace('_', '-', $listing_modifier);
-    $variables['listing_classes_array'][] = $variables['listing_modifier'];
+    $listing_modifiers = $style_plugin_options['listing_modifier'];
+    foreach ($listing_modifiers as $listing_modifier_class) {
+      $variables['listing_classes_array'][] = 'listing--' . str_replace('_', '-', $listing_modifier_class);
+    }
   }
 
   $variables['listing_modifier_extra'] = '';
