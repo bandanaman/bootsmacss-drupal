@@ -1,1 +1,1 @@
-Check README.txt in WAAT base theme for tutorial.
+Check README.txt in bootSMACSS base theme for tutorial.
