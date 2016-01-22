@@ -172,7 +172,7 @@ function bootsmacss_preprocess_item_list(&$vars) {
             if ($value['class'][0] == 'prev') {
               $vars['items'][$key]['class'][0] = 'pager-previous';
               // Get prev page url and override the output:
-              $link_path = _find_string_between($value['data'], 'href="', '"');
+              $link_path = _bootsmacss_find_string_between($value['data'], 'href="', '"');
               if (isset($link_path) && $link_path != NULL && $link_path != '') {
                 $vars['items'][$key]['data'] = '<a href="' . $link_path . '"><span class="icon icon--arrow-left"></span></a>';
               }
@@ -180,7 +180,7 @@ function bootsmacss_preprocess_item_list(&$vars) {
             if ($value['class'][0] == 'next') {
               $vars['items'][$key]['class'][0] = 'pager-next';
               // Get next page url and override the output:
-              $link_path = _find_string_between($value['data'], 'href="', '"');
+              $link_path = _bootsmacss_find_string_between($value['data'], 'href="', '"');
               if (isset($link_path) && $link_path != NULL && $link_path != '') {
                 $vars['items'][$key]['data'] = '<a href="' . $link_path . '"><span class="icon icon--arrow-right"></span></a>';
               }
@@ -525,7 +525,7 @@ function bootsmacss_qt_quicktabs_tabset($vars) {
 /**
  * Utility function for item list.
  */
-function _find_string_between($string, $start, $end) {
+function _bootsmacss_find_string_between($string, $start, $end) {
   $string = " " . $string;
   $ini = strpos($string, $start);
   if ($ini == 0) {
