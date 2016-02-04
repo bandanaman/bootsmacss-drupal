@@ -49,6 +49,9 @@ function bootsmacss_preprocess_node(&$vars) {
     array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['node']->type . '__teaser');
     array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['node']->nid . '__teaser');
   }
+
+  // Prepare tabs to render them in node.tpl or DS layout instead of page.tpl.
+  $vars['tabs'] = menu_primary_local_tasks();
 }
 
 /**
@@ -434,7 +437,7 @@ function bootsmacss_menu_local_tasks(&$variables) {
   // Add .tabs class:
   if (!empty($variables['primary'])) {
     $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
-    $variables['primary']['#prefix'] .= '<ul class="tabs--primary nav nav-pills tabs">';
+    $variables['primary']['#prefix'] .= '<ul class="nav nav-tabs">';
     $variables['primary']['#suffix'] = '</ul>';
     $output .= drupal_render($variables['primary']);
   }
@@ -442,7 +445,7 @@ function bootsmacss_menu_local_tasks(&$variables) {
   // Default classes from bootstrap.
   if (!empty($variables['secondary'])) {
     $variables['secondary']['#prefix'] = '<h2 class="element-invisible">' . t('Secondary tabs') . '</h2>';
-    $variables['secondary']['#prefix'] .= '<ul class="tabs--secondary pagination pagination-sm">';
+    $variables['secondary']['#prefix'] .= '<ul class="nav nav-pills">';
     $variables['secondary']['#suffix'] = '</ul>';
     $output .= drupal_render($variables['secondary']);
   }
