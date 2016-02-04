@@ -35,18 +35,18 @@ https://drupal.org/node/1978010
 ;; Scripts
 ;;;;;;;;;;;;;;;;;;;;;
 
-;scripts[] = 'bootstrap-sass/js/bootstrap/affix.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/alert.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/button.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/carousel.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/collapse.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/dropdown.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/modal.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/tooltip.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/popover.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/scrollspy.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/tab.js'
-;scripts[] = 'bootstrap-sass/js/bootstrap/transition.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/affix.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/alert.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/button.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/carousel.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/collapse.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/dropdown.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/modal.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/tooltip.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/popover.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/scrollspy.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/tab.js'
+;scripts[] = 'bootstrap-sass/javascripts/bootstrap/transition.js'
 scripts[] = 'js/modernizr.js'
 
 ; Disable BootstrapCDN if using Bootstrap source files in your sub-theme.
